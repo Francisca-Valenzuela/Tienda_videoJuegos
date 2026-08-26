@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    
 }
 
 :root {
@@ -17,6 +18,9 @@ body {
     color: #222;
     line-height: 1.6;
     background-color: #fafafa;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
 }
 
 /* Header */
@@ -61,10 +65,9 @@ main {
 
 #productos ul {
     list-style: none;
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 20px;
-    justify-content: center;
 }
 
 #productos li {
@@ -73,7 +76,6 @@ main {
     border: 1px solid #ddd;
     border-radius: 8px;
     box-sizing: border-box;
-    width: 300px;
     background-color: #fff;
 }
 
@@ -183,7 +185,7 @@ footer p:first-child {
 
 /* nth-child en el nav: separa visualmente el último ítem */
 nav ul li:last-child {
-    margin-left: 10px;
+    margin-left: 0;
 }
 
 /* Pseudo-clase :hover en los links del nav */
@@ -195,4 +197,35 @@ nav ul li a:hover {
 /* Selector de ID combinado con pseudo-clase */
 #contacto:hover {
     border-color: var(--color-acento);
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+
+    nav ul {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+}
+
+/* Media Queries para pantallas muy pequeñas */
+@media (max-width: 480px) {   
+
+    nav ul  {
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+        padding: 0;
+    }
+
+    nav ul li:last-child {
+        margin-left: 0;
+    }
+
+    main {
+        padding: 15px 10px;
+    }
+
+
 }
