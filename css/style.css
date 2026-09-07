@@ -194,6 +194,14 @@ nav ul li a:hover {
     border-bottom: 2px solid var(--color-acento);
 }
 
+/* Pseudo-clase para accesibilidad por teclado */
+nav ul li a:focus-visible {
+    outline: 3px dashed var(--color-acento);
+    outline-offset: 6px;
+    border-radius: 4px;
+    color: var(--color-acento);
+}
+
 /* Selector de ID combinado con pseudo-clase */
 #contacto:hover {
     border-color: var(--color-acento);
@@ -207,6 +215,21 @@ nav ul li a:hover {
         gap: 15px;
     }
 
+}
+
+/* Media Query intermedia (tablets pequeñas o móviles landscape) */
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 2rem; /* Ajuste sutil de la jerarquía tipográfica */
+    }
+    
+    #productos ul {
+        gap: 15px; /* Reducción del espaciado en la grilla para optimizar el espacio disponible */
+    }
+    
+    main {
+        padding: 20px 15px;
+    }
 }
 
 /* Media Queries para pantallas muy pequeñas */
