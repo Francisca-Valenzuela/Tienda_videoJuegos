@@ -1,0 +1,17 @@
+[
+    {
+        "titulo": "Overwatch 2",
+        "descripcion": "Acción y disparos en equipo con héroes únicos. Únete a la batalla.",
+        "imagen": "img/overwatch2.webp"
+    },
+    {
+        "titulo": "Marvel Rivals",
+        "descripcion": "Combates estratégicos y frenéticos con el multiverso de superhéroes.",
+        "imagen": "img/marvel_rivals.jpeg"
+    },
+    {
+        "titulo": "Genshin Impact",
+        "descripcion": "Explora el vasto y mágico mundo de Teyvat en esta aventura de rol.",
+        "imagen": "img/genshin_impact.jpeg"
+    }
+]
