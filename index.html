@@ -49,25 +49,31 @@
             </div>
 
             <div class="carousel-inner">
+                <!-- Ítem 1: Primera imagen visible (SIN loading="lazy") -->
                 <div class="carousel-item active">
-                    <img src="img/minecraft.webp" class="d-block w-100 carousel-img" alt="Carátula del juego Minecraft" loading="lazy">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Minecraft</h5>
-                        <p>Construye, explora y sobrevive en un mundo abierto de bloques.</p>
+                    <img src="img/minecraft.webp" class="d-block w-100 object-fit-cover" alt="Carátula del juego Minecraft">
+                    <!-- Leyenda simplificada: Título siempre visible, párrafo oculto en móviles -->
+                    <div class="carousel-caption">
+                        <h5 class="fw-bold bg-dark bg-opacity-50 d-inline-block p-2 rounded">Minecraft</h5>
+                        <p class="d-none d-md-block">Construye, explora y sobrevive en un mundo abierto de bloques.</p>
                     </div>
                 </div>
+                
+                <!-- Ítem 2: Mantiene loading="lazy" -->
                 <div class="carousel-item">
-                    <img src="img/resident_evil_4_remake.webp" class="d-block w-100 carousel-img" alt="Carátula del juego Resident Evil 4 Remake" loading="lazy">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Resident Evil 4 Remake</h5>
-                        <p>Sobrevive al horror en la piel de Leon S. Kennedy.</p>
+                    <img src="img/resident_evil_4_remake.webp" class="d-block w-100 object-fit-cover" alt="Carátula del juego Resident Evil 4 Remake" loading="lazy">
+                    <div class="carousel-caption">
+                        <h5 class="fw-bold bg-dark bg-opacity-50 d-inline-block p-2 rounded">Resident Evil 4 Remake</h5>
+                        <p class="d-none d-md-block">Sobrevive al horror en la piel de Leon S. Kennedy.</p>
                     </div>
                 </div>
+                
+                <!-- Ítem 3: Mantiene loading="lazy" -->
                 <div class="carousel-item">
-                    <img src="img/hogwarts_legacy.webp" class="d-block w-100 carousel-img" alt="Carátula del juego Hogwarts Legacy" loading="lazy">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Hogwarts Legacy</h5>
-                        <p>Vive la experiencia de estudiar magia en Hogwarts.</p>
+                    <img src="img/hogwarts_legacy.webp" class="d-block w-100 object-fit-cover" alt="Carátula del juego Hogwarts Legacy" loading="lazy">
+                    <div class="carousel-caption">
+                        <h5 class="fw-bold bg-dark bg-opacity-50 d-inline-block p-2 rounded">Hogwarts Legacy</h5>
+                        <p class="d-none d-md-block">Vive la experiencia de estudiar magia en Hogwarts.</p>
                     </div>
                 </div>
             </div>

@@ -66,15 +66,12 @@ a:focus-visible {
    Carrusel 
 --------------------------------------- */
 .carousel-img {
-    height: 420px;
-    object-fit: cover;
     filter: brightness(0.75);
 }
 
 .carousel-caption h5 {
     font-weight: bold;
 }
-
 /* --------------------------------------
    Tarjetas (Cards)
 --------------------------------------- */
@@ -108,19 +105,3 @@ a:focus-visible {
     color: var(--color-acento);
 }
 
-/* --------------------------------------
-   Media Queries
---------------------------------------- */
-@media (max-width: 768px) {
-    /* Ajuste para tablets */
-    .carousel-img {
-        height: 320px;
-    }
-}
-
-@media (max-width: 576px) {
-    /* Ajuste para móviles */
-    .carousel-img {
-        height: 220px;
-    }
-}
