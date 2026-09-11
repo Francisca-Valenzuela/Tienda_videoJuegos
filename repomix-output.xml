@@ -1,0 +1,594 @@
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+css/style.css
+img/genshin_impact.jpeg
+img/hogwarts_legacy.webp
+img/marvel_rivals.jpeg
+img/minecraft.webp
+img/overwatch2.webp
+img/resident_evil_4_remake.webp
+index.html
+js/main.js
+productos.json
+README.md
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="js/main.js">
+/**
+ * Función que obtiene productos desde un archivo JSON local usando Fetch API
+ */
+function cargarProductos() {
+    // Uso de promesas para manejar el flujo asincrónico y posibles errores de red
+    fetch('productos.json')
+        .then(respuesta => {
+            if (!respuesta.ok) {
+                throw new Error('Error al cargar el archivo JSON');
+            }
+            return respuesta.json();
+        })
+        .then(datos => {
+            renderizarProductos(datos);
+        })
+        .catch(error => {
+            console.error('Ocurrió un error en la carga de productos:', error);
+        });
+}
+
+/**
+ * Función que crea y renderiza dinámicamente elementos en el DOM
+ * @param {Array} productos - Arreglo de objetos con la información de los videojuegos
+ */
+function renderizarProductos(productos) {
+    const contenedor = document.getElementById('contenedor-productos');
+
+    productos.forEach(producto => {
+        // Manipulación del DOM: Creación de un nuevo elemento div
+        const columna = document.createElement('div');
+        columna.className = 'col-12 col-sm-6 col-lg-4'; 
+
+        // Manipulación del DOM: Uso de innerHTML para estructurar la tarjeta
+        columna.innerHTML = `
+            <div class="card h-100 shadow-sm producto-card border-0">
+                <img src="${producto.imagen}" class="card-img-top" alt="Carátula de ${producto.titulo}" loading="lazy">
+                <div class="card-body d-flex flex-column bg-light rounded-bottom">
+                    <h3 class="card-title h5 fw-bold" style="color: var(--color-secundario);">${producto.titulo}</h3>
+                    <p class="card-text text-secondary small">${producto.descripcion}</p>
+                    <a href="#contacto" class="btn btn-custom mt-auto fw-bold btn-info-dinamico">Más información</a>
+                </div>
+            </div>
+        `;
+
+        // Manipulación del DOM: Inserción del elemento en el contenedor principal
+        contenedor.appendChild(columna);
+    });
+
+    // Una vez renderizados los nuevos elementos, inicializamos sus eventos de mouse
+    inicializarEventosMouse();
+}
+
+/**
+ * Configura los eventos 'mouseover' y 'click' para las tarjetas y botones
+ */
+function inicializarEventosMouse() {
+    const tarjetas = document.querySelectorAll('.producto-card');
+    const botonesInfo = document.querySelectorAll('.btn-info-dinamico, .btn-custom');
+
+    // Evento mouseover: Cambia un estilo temporalmente al pasar el ratón
+    tarjetas.forEach(tarjeta => {
+        tarjeta.addEventListener('mouseover', function() {
+            this.style.opacity = '0.9';
+        });
+        tarjeta.addEventListener('mouseout', function() {
+            this.style.opacity = '1';
+        });
+    });
+
+    // Evento click: Desencadena una notificación visual en la interfaz
+    botonesInfo.forEach(boton => {
+        boton.addEventListener('click', function(evento) {
+            // Evitamos el comportamiento de salto predeterminado del enlace
+            evento.preventDefault();
+            
+            // Reutilizamos tu función de alertas para integrarla con la navegación
+            mostrarAlerta("Pronto tendremos más información detallada sobre este título en nuestra tienda.", "info");
+            
+            // Hacemos un scroll suave hacia el formulario donde se inyecta la alerta
+            document.getElementById('contacto').scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+}
+
+/**
+ * Función que configura el evento 'submit' en el formulario de contacto
+ */
+function configurarFormulario() {
+    const formulario = document.querySelector('form'); 
+
+    formulario.addEventListener('submit', function(evento) {
+        // Evitamos que la página se recargue automáticamente
+        evento.preventDefault();
+
+        // Capturamos los valores de los campos
+        const nombre = document.getElementById('nombre').value;
+        const email = document.getElementById('email').value;
+        const mensaje = document.getElementById('mensaje').value;
+
+        // Validaciones de campos vacíos
+        if (nombre.trim() === '' || email.trim() === '' || mensaje.trim() === '') {
+            // Inyectamos una alerta de error (roja) usando la clase 'danger' de Bootstrap
+            mostrarAlerta('Por favor, completa todos los campos del formulario antes de enviar.', 'danger');
+        } else {
+            // Inyectamos una alerta de éxito (verde) usando la clase 'success' de Bootstrap
+            mostrarAlerta(`Gracias por contactarnos, ${nombre}. Hemos recibido tu mensaje y te responderemos a ${email}.`, 'success');
+            
+            // Limpiamos los campos del formulario tras el envío exitoso
+            formulario.reset(); 
+        }
+    });
+}
+
+// Ejecución principal al cargar el script
+document.addEventListener('DOMContentLoaded', () => {
+    cargarProductos();
+    configurarFormulario();
+});
+
+/**
+ * Función que crea e inyecta una alerta de Bootstrap en el DOM
+ * @param {string} mensaje - El texto que mostrará la alerta
+ * @param {string} tipo - El tipo de alerta de Bootstrap (success, danger, warning, etc.)
+ */
+function mostrarAlerta(mensaje, tipo) {
+    // 1. Seleccionamos el formulario donde inyectaremos la alerta
+    const formulario = document.querySelector('form');
+
+    // 2. Eliminamos cualquier alerta previa para no acumular mensajes en pantalla
+    const alertaPrevia = document.querySelector('.alerta-dinamica');
+    if (alertaPrevia) {
+        alertaPrevia.remove(); // Manipulación del DOM: eliminación de nodos
+    }
+
+    // 3. Manipulación del DOM: Creación del nuevo elemento div
+    const alerta = document.createElement('div');
+    
+    // 4. Asignamos las clases de Bootstrap 5 para alertas dismissible (que se pueden cerrar)
+    alerta.className = `alert alert-${tipo} alert-dismissible fade show alerta-dinamica mb-4`;
+    alerta.setAttribute('role', 'alert');
+
+    // 5. Estructuramos el contenido interno de la alerta usando innerHTML
+    alerta.innerHTML = `
+        <strong>${tipo === 'danger' ? '¡Error!' : '¡Éxito!'}</strong> ${mensaje}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+    `;
+
+    // 6. Manipulación del DOM: Insertamos la alerta al principio del formulario
+    formulario.prepend(alerta); 
+}
+</file>
+
+<file path="productos.json">
+[
+    {
+        "titulo": "Overwatch 2",
+        "descripcion": "Acción y disparos en equipo con héroes únicos. Únete a la batalla.",
+        "imagen": "img/overwatch2.webp"
+    },
+    {
+        "titulo": "Marvel Rivals",
+        "descripcion": "Combates estratégicos y frenéticos con el multiverso de superhéroes.",
+        "imagen": "img/marvel_rivals.jpeg"
+    },
+    {
+        "titulo": "Genshin Impact",
+        "descripcion": "Explora el vasto y mágico mundo de Teyvat en esta aventura de rol.",
+        "imagen": "img/genshin_impact.jpeg"
+    }
+]
+</file>
+
+<file path="README.md">
+# 🎮 Tienda de Videojuegos - Frontend
+
+Este proyecto es una plataforma web responsiva e interactiva para la visualización y venta de videojuegos, desarrollada como parte de la asignatura Desarrollo Frontend I.
+
+## 🚀 Tecnologías Utilizadas
+*   **HTML5:** Estructura semántica (`header`, `nav`, `section`, `footer`).
+*   **CSS3:** Variables globales, modelo de cajas y accesibilidad por teclado.
+*   **Bootstrap 5.3:** Grid System, Navbar colapsable, Cards, Carrusel interactivo y Alertas dinámicas.
+*   **JavaScript (Vanilla JS):** Manipulación del DOM, manejo de eventos y asincronía mediante promesas.
+
+## 📂 Estructura Principal
+*   `index.html`: Página principal (Landing Page) que contiene el carrusel de destacados, formulario de contacto y la grilla dinámica de productos.
+*   `css/style.css`: Hoja de estilos personalizada para complementar el framework.
+*   `js/main.js`: Script principal que controla la lógica de la interfaz, validación de formularios y la renderización de datos.
+*   `productos.json`: Fuente de datos local que simula una API externa con el catálogo de videojuegos.
+*   `img/`: Directorio de recursos gráficos optimizados en formato WebP.
+
+## ✨ Funcionalidades Dinámicas (Semana 5)
+Para mejorar la interactividad y la experiencia del usuario, se implementaron las siguientes características mediante JavaScript:
+*   **Catálogo Asíncrono (Fetch API):** Los productos adicionales se cargan dinámicamente desde el archivo `productos.json` y se inyectan en el DOM (`createElement`, `innerHTML`, `appendChild`).
+*   **Gestión de Eventos:** 
+    *   Efectos visuales de opacidad en las tarjetas al interactuar con el cursor (`mouseover` / `mouseout`).
+    *   Escucha de eventos de botón (`click`) para información detallada.
+*   **Validación de Formulario y Accesibilidad (UX):** Intercepción del evento `submit` (previniendo la recarga de la página) para validar campos vacíos. La retroalimentación al usuario se realiza inyectando dinámicamente **Alertas de Bootstrap** directamente en el DOM, evitando el uso de ventanas emergentes invasivas y mejorando la accesibilidad web.
+</file>
+
+<file path="css/style.css">
+/* Variables CSS Globales */
+:root {
+    --color-primario: #1a1a2e;
+    --color-secundario: #16213e;
+    --color-acento: #fce205;
+    --color-texto: #f1f1f1;
+    --fuente-principal: 'Segoe UI', Arial, sans-serif;
+}
+
+/* --------------------------------------
+   Comportamiento de Scroll Global
+--------------------------------------- */
+html {
+    scroll-padding-top: 85px; 
+    scroll-behavior: smooth; 
+}
+
+body {
+    font-family: var(--fuente-principal);
+    background-color: #fafafa;
+}
+
+/* --------------------------------------
+   Accesibilidad (Navegación por Teclado)
+--------------------------------------- */
+/* Destaca los elementos interactivos al navegar con la tecla Tab */
+.nav-link:focus-visible,
+.btn-custom:focus-visible,
+.navbar-brand:focus-visible,
+a:focus-visible {
+    outline: 3px solid var(--color-acento) !important;
+    outline-offset: 4px;
+    border-radius: 4px;
+}
+
+/* --------------------------------------
+   Navbar y Navegación
+--------------------------------------- */
+.nav-link {
+    transition: color 0.2s ease, border-bottom 0.2s ease;
+    border-bottom: 2px solid transparent;
+    color: var(--color-texto) !important;
+    font-weight: 600;
+}
+
+.nav-link:hover, 
+.nav-link.active {
+    color: var(--color-acento) !important;
+    border-bottom: 2px solid var(--color-acento);
+}
+
+/* --------------------------------------
+   Header Hero y Footer
+--------------------------------------- */
+.header-bg {
+    background-color: var(--color-primario);
+    border-bottom: 4px solid var(--color-acento);
+}
+
+.footer-bg {
+    background-color: var(--color-primario);
+    border-top: 4px solid var(--color-acento);
+}
+
+/* --------------------------------------
+   Carrusel 
+--------------------------------------- */
+.carousel-img {
+    filter: brightness(0.75);
+}
+
+.carousel-caption h5 {
+    font-weight: bold;
+}
+/* --------------------------------------
+   Tarjetas (Cards)
+--------------------------------------- */
+.card-img-top {
+    height: 220px;
+    object-fit: cover;
+    border-bottom: 3px solid var(--color-secundario);
+}
+
+.producto-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.producto-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15) !important;
+    border-bottom: 3px solid var(--color-acento) !important;
+}
+
+/* Botón personalizado de tarjetas */
+.btn-custom {
+    background-color: var(--color-secundario);
+    border: 1px solid var(--color-secundario);
+    color: var(--color-texto);
+    transition: all 0.3s ease;
+}
+
+.btn-custom:hover {
+    background-color: var(--color-primario);
+    border-color: var(--color-acento);
+    color: var(--color-acento);
+}
+</file>
+
+<file path="index.html">
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎮 Videojuegos</title>
+    <!-- Integración de Bootstrap 5.3 vía CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Hoja de estilos personalizada -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+    <!-- ===================== NAVBAR ===================== -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: var(--color-secundario);">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand fw-bold fs-3" href="#inicio">🎮 Videojuegos</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal" aria-controls="menuPrincipal" aria-expanded="false" aria-label="Abrir menú de navegación">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="menuPrincipal">
+                <ul class="navbar-nav gap-2">
+                    <li class="nav-item"><a class="nav-link active" href="#inicio" title="Ir a inicio">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#nosotros" title="Conócenos">Nosotros</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#productos" title="Ir a productos">Productos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contacto" title="Ir a contacto">Contacto</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===================== HERO / ENCABEZADO ===================== -->
+    <header id="inicio" class="text-center text-white py-5 header-bg">
+        <div class="container">
+            <h1 class="display-5 fw-bold">Videojuegos</h1>
+            <p class="lead">Bienvenido a nuestra página de videojuegos</p>
+        </div>
+    </header>
+
+    <!-- ===================== CARRUSEL ===================== -->
+    <section aria-label="Destacados">
+        <!-- data-bs-interval="3000" controla el cambio cada 3 segundos -->
+        <div id="carruselJuegos" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carruselJuegos" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carruselJuegos" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carruselJuegos" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+
+            <div class="carousel-inner">
+                <!-- Ítem 1: Primera imagen visible (SIN loading="lazy") -->
+                <div class="carousel-item active">
+                    <img src="img/minecraft.webp" class="d-block w-100 object-fit-cover" alt="Carátula del juego Minecraft">
+                    <!-- Leyenda simplificada: Título siempre visible, párrafo oculto en móviles -->
+                    <div class="carousel-caption">
+                        <h5 class="fw-bold bg-dark bg-opacity-50 d-inline-block p-2 rounded">Minecraft</h5>
+                        <p class="d-none d-md-block">Construye, explora y sobrevive en un mundo abierto de bloques.</p>
+                    </div>
+                </div>
+                
+                <!-- Ítem 2: Mantiene loading="lazy" -->
+                <div class="carousel-item">
+                    <img src="img/resident_evil_4_remake.webp" class="d-block w-100 object-fit-cover" alt="Carátula del juego Resident Evil 4 Remake" loading="lazy">
+                    <div class="carousel-caption">
+                        <h5 class="fw-bold bg-dark bg-opacity-50 d-inline-block p-2 rounded">Resident Evil 4 Remake</h5>
+                        <p class="d-none d-md-block">Sobrevive al horror en la piel de Leon S. Kennedy.</p>
+                    </div>
+                </div>
+                
+                <!-- Ítem 3: Mantiene loading="lazy" -->
+                <div class="carousel-item">
+                    <img src="img/hogwarts_legacy.webp" class="d-block w-100 object-fit-cover" alt="Carátula del juego Hogwarts Legacy" loading="lazy">
+                    <div class="carousel-caption">
+                        <h5 class="fw-bold bg-dark bg-opacity-50 d-inline-block p-2 rounded">Hogwarts Legacy</h5>
+                        <p class="d-none d-md-block">Vive la experiencia de estudiar magia en Hogwarts.</p>
+                    </div>
+                </div>
+            </div>
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#carruselJuegos" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Anterior</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carruselJuegos" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Siguiente</span>
+            </button>
+        </div>
+    </section>
+
+    <main class="container my-5">
+        
+        <!-- ===================== GRID SYSTEM: NOSOTROS ===================== -->
+        <section id="nosotros" class="mb-5">
+            <h2 class="text-center mb-4 fw-bold" style="color: var(--color-primario);">¿Por qué comprar con nosotros?</h2>
+            <!-- Integración de col-sm-6 para mejorar el diseño en tablets -->
+            <div class="row g-4 text-center justify-content-center">
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="p-3 border rounded-3 shadow-sm bg-white h-100">
+                        <div class="fs-1">🚚</div>
+                        <h3 class="h5 fw-bold mt-2">Envío rápido</h3>
+                        <p class="text-secondary small mb-0">Recibe tus juegos en tiempo récord en tu domicilio.</p>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="p-3 border rounded-3 shadow-sm bg-white h-100">
+                        <div class="fs-1">💳</div>
+                        <h3 class="h5 fw-bold mt-2">Pago seguro</h3>
+                        <p class="text-secondary small mb-0">Todas tus transacciones están cifradas y protegidas.</p>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="p-3 border rounded-3 shadow-sm bg-white h-100">
+                        <div class="fs-1">🎧</div>
+                        <h3 class="h5 fw-bold mt-2">Soporte 24/7</h3>
+                        <p class="text-secondary small mb-0">Atención personalizada para tus dudas a toda hora.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================== TARJETAS (CARDS): PRODUCTOS ===================== -->
+        <section id="productos" class="mb-5">
+            <h2 class="text-center mb-4 fw-bold" style="color: var(--color-primario);">Productos Destacados</h2>
+            <!-- Integración de col-sm-6 para mejorar el diseño en tablets -->
+            <div class="row g-4 justify-content-center" id="contenedor-productos">
+                
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="card h-100 shadow-sm producto-card border-0">
+                        <img src="img/minecraft.webp" class="card-img-top" alt="Carátula de Minecraft" loading="lazy">
+                        <div class="card-body d-flex flex-column bg-light rounded-bottom">
+                            <h3 class="card-title h5 fw-bold" style="color: var(--color-secundario);">Minecraft</h3>
+                            <p class="card-text text-secondary small">Juego de construcción y aventura en un mundo abierto. Explora, construye y sobrevive.</p>
+                            <a href="#contacto" class="btn btn-custom mt-auto fw-bold">Más información</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="card h-100 shadow-sm producto-card border-0">
+                        <img src="img/resident_evil_4_remake.webp" class="card-img-top" alt="Carátula de Resident Evil 4 Remake" loading="lazy">
+                        <div class="card-body d-flex flex-column bg-light rounded-bottom">
+                            <h3 class="card-title h5 fw-bold" style="color: var(--color-secundario);">Resident Evil 4 Remake</h3>
+                            <p class="card-text text-secondary small">Versión actualizada del clásico survival horror. Asume el rol de Leon S. Kennedy en una intensa misión.</p>
+                            <a href="#contacto" class="btn btn-custom mt-auto fw-bold">Más información</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="card h-100 shadow-sm producto-card border-0">
+                        <img src="img/hogwarts_legacy.webp" class="card-img-top" alt="Carátula de Hogwarts Legacy" loading="lazy">
+                        <div class="card-body d-flex flex-column bg-light rounded-bottom">
+                            <h3 class="card-title h5 fw-bold" style="color: var(--color-secundario);">Hogwarts Legacy</h3>
+                            <p class="card-text text-secondary small">Juego de rol en mundo abierto que te permite vivir la experiencia de estudiar magia en Hogwarts.</p>
+                            <a href="#contacto" class="btn btn-custom mt-auto fw-bold">Más información</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ===================== CONTACTO ===================== -->
+        <section id="contacto" class="p-4 rounded-4 shadow-sm bg-white border" style="border-color: #eee;">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-8 col-lg-6">
+                    <div class="text-center mb-4">
+                        <h2 class="h4 mb-3 fw-bold" style="color: var(--color-primario);">Contacto</h2>
+                        <p class="text-secondary">
+                            ¿Tienes dudas sobre nuestros productos? Escríbenos a 
+                            <a href="mailto:soporte@videojuegos.cl" class="text-decoration-none fw-bold text-dark">soporte@videojuegos.cl</a>
+                            o completa el siguiente formulario:
+                        </p>
+                    </div>
+
+                    <!-- Formulario semántico HTML5 -->
+                    <form action="#" method="POST">
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label fw-bold" style="color: var(--color-secundario);">Nombre:</label>
+                            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingresa tu nombre" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="email" class="form-label fw-bold" style="color: var(--color-secundario);">Correo electrónico:</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="ejemplo@correo.com" required>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="mensaje" class="form-label fw-bold" style="color: var(--color-secundario);">Mensaje:</label>
+                            <textarea class="form-control" id="mensaje" name="mensaje" rows="4" placeholder="Escribe tu mensaje aquí..." required></textarea>
+                        </div>
+                        
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-custom fw-bold px-5 py-2">Enviar mensaje</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </main> 
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="text-center py-4 mt-auto footer-bg">
+        <!-- El texto interno del footer sí usa un container para alinearse con el resto del sitio -->
+        <div class="container text-white">
+            <p class="fw-bold mb-1">© 2026 Videojuegos. Todos los derechos reservados.</p>
+            <p class="mb-1 text-light opacity-75 small">Calle Wallaby 42, Sídney</p>
+            <p class="mb-0 text-light opacity-75 small">soporte@videojuegos.cl</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Script personalizado -->
+     <script src="js/main.js"></script>
+
+
+</body>
+</html>
+</file>
+
+</files>

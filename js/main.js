@@ -55,7 +55,7 @@ function renderizarProductos(productos) {
  */
 function inicializarEventosMouse() {
     const tarjetas = document.querySelectorAll('.producto-card');
-    const botonesInfo = document.querySelectorAll('.btn-info-dinamico, .btn-custom');
+    const botonesInfo = document.querySelectorAll('.btn-info-dinamico, a.btn-custom');
 
     // Evento mouseover: Cambia un estilo temporalmente al pasar el ratón
     tarjetas.forEach(tarjeta => {
@@ -116,6 +116,42 @@ document.addEventListener('DOMContentLoaded', () => {
     cargarProductos();
     configurarFormulario();
 });
+
+/**
+ * Función que configura el evento 'submit' en el formulario de contacto
+ */
+function configurarFormulario() {
+    const formulario = document.querySelector('form'); 
+
+    formulario.addEventListener('submit', function(evento) {
+        // Evitamos que la página se recargue automáticamente
+        evento.preventDefault();
+
+        // Capturamos los valores de los campos
+        const nombre = document.getElementById('nombre').value;
+        const email = document.getElementById('email').value;
+        const mensaje = document.getElementById('mensaje').value;
+
+        // 1. Validación de campos vacíos
+        if (nombre.trim() === '' || email.trim() === '' || mensaje.trim() === '') {
+            mostrarAlerta('Por favor, completa todos los campos del formulario antes de enviar.', 'danger');
+            return; // El return detiene la ejecución de la función aquí mismo
+        } 
+        
+        // 2. Validación específica de formato de correo electrónico
+        // Esta expresión regular verifica que exista texto, un '@', más texto, un '.' y un dominio final.
+        const regexCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        
+        if (!regexCorreo.test(email)) {
+            mostrarAlerta('Por favor, ingresa un correo electrónico válido que contenga un "@" y un dominio.', 'danger');
+            return; // Detiene la ejecución si el correo es inválido
+        }
+
+        // 3. Flujo exitoso (si pasa todas las validaciones anteriores)
+        mostrarAlerta(`Gracias por contactarnos, ${nombre}. Hemos recibido tu mensaje y te responderemos a ${email}.`, 'success');
+        formulario.reset(); 
+    });
+}
 
 /**
  * Función que crea e inyecta una alerta de Bootstrap en el DOM
