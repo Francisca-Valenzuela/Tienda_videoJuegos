@@ -11,19 +11,19 @@
    Comportamiento de Scroll Global
 --------------------------------------- */
 html {
-    scroll-padding-top: 85px; 
-    scroll-behavior: smooth; 
+    scroll-padding-top: 85px;
+    scroll-behavior: smooth;
 }
 
 body {
     font-family: var(--fuente-principal);
     background-color: #fafafa;
+    
 }
 
 /* --------------------------------------
    Accesibilidad (Navegación por Teclado)
 --------------------------------------- */
-/* Destaca los elementos interactivos al navegar con la tecla Tab */
 .nav-link:focus-visible,
 .btn-custom:focus-visible,
 .navbar-brand:focus-visible,
@@ -43,10 +43,15 @@ a:focus-visible {
     font-weight: 600;
 }
 
-.nav-link:hover, 
+.nav-link:hover,
 .nav-link.active {
     color: var(--color-acento) !important;
     border-bottom: 2px solid var(--color-acento);
+}
+
+/* Formulario de búsqueda en la navbar */
+#formulario-busqueda .form-control {
+    min-width: 140px;
 }
 
 /* --------------------------------------
@@ -63,7 +68,7 @@ a:focus-visible {
 }
 
 /* --------------------------------------
-   Carrusel 
+   Carrusel
 --------------------------------------- */
 .carousel-img {
     filter: brightness(0.75);
@@ -72,6 +77,7 @@ a:focus-visible {
 .carousel-caption h5 {
     font-weight: bold;
 }
+
 /* --------------------------------------
    Tarjetas (Cards)
 --------------------------------------- */
@@ -91,7 +97,7 @@ a:focus-visible {
     border-bottom: 3px solid var(--color-acento) !important;
 }
 
-/* Botón personalizado de tarjetas */
+/* Botón personalizado */
 .btn-custom {
     background-color: var(--color-secundario);
     border: 1px solid var(--color-secundario);
@@ -105,3 +111,28 @@ a:focus-visible {
     color: var(--color-acento);
 }
 
+/* --------------------------------------
+   Carrito de Compras
+--------------------------------------- */
+#lista-carrito .list-group-item {
+    border-color: #eee;
+}
+
+#contador-carrito {
+    font-size: 0.65rem;
+}
+
+/* --------------------------------------
+  Modelo de Cajas y Flexbox
+--------------------------------------- */
+body, html {
+    margin: 0 !important;
+    padding: 0;
+}
+
+/* --------------------------------------
+   Contenedor de Alertas Globales
+--------------------------------------- */
+.bg-alertas-wrapper {
+    background-color: var(--color-primario); /* Adoptará el tono oscuro de tu header */
+}
