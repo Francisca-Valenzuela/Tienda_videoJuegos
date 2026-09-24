@@ -1,26 +1,8 @@
 [
-    {
-        "id": 4,
-        "titulo": "Overwatch 2",
-        "descripcion": "Acción y disparos en equipo con héroes únicos. Únete a la batalla.",
-        "imagen": "assets/img/overwatch2.webp",
-        "precio": 29990,
-        "categoria": "Acción"
-    },
-    {
-        "id": 5,
-        "titulo": "Marvel Rivals",
-        "descripcion": "Combates estratégicos y frenéticos con el multiverso de superhéroes.",
-        "imagen": "assets/img/marvel_rivals.jpeg",
-        "precio": 24990,
-        "categoria": "Acción"
-    },
-    {
-        "id": 6,
-        "titulo": "Genshin Impact",
-        "descripcion": "Explora el vasto y mágico mundo de Teyvat en esta aventura de rol.",
-        "imagen": "assets/img/genshin_impact.jpeg",
-        "precio": 19990,
-        "categoria": "Aventura"
-    }
+  { "id": 1, "titulo": "Minecraft", "descripcion": "Construye, explora y sobrevive en un mundo abierto.", "imagen": "img/minecraft.webp", "precioNormal": 27990, "precioOferta": 22990, "categoria": "Aventura" },
+  { "id": 2, "titulo": "Resident Evil 4 Remake", "descripcion": "Survival horror renovado con Leon S. Kennedy.", "imagen": "img/resident_evil_4_remake.webp", "precioNormal": 39990, "precioOferta": 31990, "categoria": "Acción" },
+  { "id": 3, "titulo": "Hogwarts Legacy", "descripcion": "Rol en mundo abierto: vive la magia de Hogwarts.", "imagen": "img/hogwarts_legacy.webp", "precioNormal": 34990, "precioOferta": 27990, "categoria": "Aventura" },
+  { "id": 4, "titulo": "Overwatch 2", "descripcion": "Acción y disparos en equipo con héroes únicos.", "imagen": "img/overwatch2.webp", "precioNormal": 29990, "precioOferta": 24990, "categoria": "Acción" },
+  { "id": 5, "titulo": "Marvel Rivals", "descripcion": "Combates estratégicos con el multiverso de superhéroes.", "imagen": "img/marvel_rivals.jpeg", "precioNormal": 24990, "precioOferta": 19990, "categoria": "Acción" },
+  { "id": 6, "titulo": "Genshin Impact", "descripcion": "Explora el mágico mundo de Teyvat en esta aventura de rol.", "imagen": "img/genshin_impact.jpeg", "precioNormal": 19990, "precioOferta": 15990, "categoria": "Aventura" }
 ]
