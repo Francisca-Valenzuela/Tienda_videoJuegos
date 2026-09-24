@@ -136,3 +136,8 @@ body, html {
 .bg-alertas-wrapper {
     background-color: var(--color-primario); /* Adoptará el tono oscuro de tu header */
 }
+
+/* --------------------------------------
+   Semana 7: precios de oferta y hover (antes hecho con JS)
+--------------------------------------- */
+.producto-card:hover { opacity: 0.9; }
