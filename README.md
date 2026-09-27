@@ -55,3 +55,4 @@ npm run deploy     # publica en la rama gh-pages
 | Búsqueda sin resultados | ![Búsqueda](docs/capturas/06-busqueda.png) |
 | Filtro por categoría | ![Categoría](docs/capturas/07-categoria.png) |
 | Formulario de contacto | ![Contacto](docs/capturas/08-contacto.png) |
+| Vista móvil | ![Móvil](docs/capturas/10-movil.png) |
