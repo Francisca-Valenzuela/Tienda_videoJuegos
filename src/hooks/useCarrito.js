@@ -33,5 +33,9 @@ export default function useCarrito() {
   const cantidadTotal = carrito.reduce((acc, i) => acc + i.cantidad, 0);
   const total = carrito.reduce((acc, i) => acc + i.precioOferta * i.cantidad, 0);
 
-  return { carrito, agregar, restar, quitar, vaciar, cantidadTotal, total };
+  // Mapa { idProducto: unidades } para saber si un producto ya está en el carrito
+  // (lo usa ProductCard para cambiar el botón a "En el carrito")
+  const cantidades = Object.fromEntries(carrito.map((i) => [i.id, i.cantidad]));
+
+  return { carrito, agregar, restar, quitar, vaciar, cantidadTotal, total, cantidades };
 }

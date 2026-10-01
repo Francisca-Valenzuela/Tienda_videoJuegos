@@ -1,13 +1,19 @@
 import { formatearPrecio } from '../utils/formatearPrecio';
 
-/** Tarjeta de un producto. Props: producto, onAgregar. */
-export default function ProductCard({ producto, onAgregar }) {
+/**
+ * Tarjeta de un producto. Props: producto, cantidadEnCarrito y onAgregar.
+ * Renderizado condicional: si el producto ya está en el carrito, la tarjeta se resalta
+ * en verde y el botón cambia de "Agregar al carrito" a "En el carrito" (con sus unidades).
+ */
+export default function ProductCard({ producto, cantidadEnCarrito, onAgregar }) {
   const { titulo, descripcion, imagen, precioNormal, precioOferta, categoria } = producto;
   const descuento = Math.round((1 - precioOferta / precioNormal) * 100);
+  const enCarrito = cantidadEnCarrito > 0;
 
   return (
     <div className="col-12 col-sm-6 col-lg-4">
-      <div className="card h-100 shadow-sm producto-card border-0">
+      {/* Estilo condicional: borde verde cuando el producto está en el carrito */}
+      <div className={`card h-100 shadow-sm producto-card ${enCarrito ? 'border border-2 border-success' : 'border-0'}`}>
         <img src={`${import.meta.env.BASE_URL}${imagen}`} className="card-img-top" alt={`Carátula de ${titulo}`} loading="lazy" />
         <div className="card-body d-flex flex-column bg-light rounded-bottom">
           <div className="d-flex justify-content-between align-items-start mb-2">
@@ -20,8 +26,14 @@ export default function ProductCard({ producto, onAgregar }) {
             <s className="text-secondary small me-2">{formatearPrecio(precioNormal)}</s>
             <span className="fw-bold fs-5" style={{ color: 'var(--color-primario)' }}>{formatearPrecio(precioOferta)}</span>
           </p>
-          <button type="button" className="btn btn-custom mt-auto fw-bold" onClick={() => onAgregar(producto)}>
-            Agregar al carrito 🛒
+          {/* Botón condicional: cambia texto y color según el estado del carrito */}
+          <button
+            type="button"
+            className={`btn mt-auto fw-bold ${enCarrito ? 'btn-success' : 'btn-custom'}`}
+            title={enCarrito ? 'Agregar otra unidad' : undefined}
+            onClick={() => onAgregar(producto)}
+          >
+            {enCarrito ? `✓ En el carrito (${cantidadEnCarrito})` : 'Agregar al carrito 🛒'}
           </button>
         </div>
       </div>

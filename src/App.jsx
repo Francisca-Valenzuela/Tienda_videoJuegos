@@ -111,6 +111,7 @@ export default function App() {
           cargando={cargando}
           error={error}
           busqueda={busqueda}
+          cantidades={carro.cantidades}
           onAgregar={manejarAgregar}
         />
         <ShoppingCart
